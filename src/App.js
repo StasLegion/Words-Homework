@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import LetterWords from "./components/words/LetterWords.js";
+import Words from "./components/words/Words.js";
+import nouns from "./components/nouns.js";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const HomePage = () => {
+    return <h1>Словарь</h1>;
+};
+
+const WordDetail = ({ word }) => {
+    return (
+        <div style={{ textAlign: 'center', fontSize: '48px' }}>
+            {word}
+        </div>
+    );
+};
+
+
+
+const App = () => {
+    return (
+        <Router>
+            <div>
+                <nav>
+                    <Link to="/">Домой</Link>
+                    {' | '}
+                    <Link to="/words">Слова</Link>
+                </nav>
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/words" element={<Words />} />
+                    <Route path="/words/:letter" element={<LetterWords />} />
+                    <Route path="/words/detail/:word" element={({ match }) => <WordDetail word={match.params.word} />} />
+                </Routes>
+            </div>
+        </Router>
+    );
+};
 
 export default App;
